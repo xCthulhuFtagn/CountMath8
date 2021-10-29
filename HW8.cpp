@@ -12,7 +12,7 @@ double y_der(double x, double y){
 void Euler(double(deriv)(double, double), double h, double begin, double end, double y){
     cout << begin << " " << y << endl;
     for (auto x = begin + h; x < end + h; x+=h){
-        y += h * y_der(x, y);
+        y += h * deriv(x, y);
         cout << x << " " << y << endl;
     }
 }
@@ -21,17 +21,17 @@ void RungeKutt(double(deriv)(double, double), double h, double begin, double end
     double K1, K2, K3, K4;
     for (auto x = begin; x < end + h; x+=h){
         cout << x << " " << y << endl;
-        K1 = deriv(begin, y), K2 = deriv(begin + h/2, y + h/2 * K1), 
-        K3 = deriv(begin + h/2, y + h/2 * K2), K4 = deriv(begin + h, y + h * K3);
+        K1 = deriv(x, y), K2 = deriv(x + h/2, y + h/2 * K1), 
+        K3 = deriv(x + h/2, y + h/2 * K2), K4 = deriv(x + h, y + h * K3);
         y = y + h/6 * (K1 + 2*K2 + 2*K3 + K4);
     }
 }
 
 void EulerKoshi(double(deriv)(double, double), double h, double begin, double end, double y){
     cout << begin << " " << y << endl;
-    for (auto x = begin + h; x < end + h; x+=h){
-        y = y + h/2 * (deriv(x, y) + deriv(x, y + h*deriv(x, y)));
-        cout << x << " " << y << endl;
+    for (auto x = begin; x < end; x+=h){
+        y = y + h * (deriv(x, y) + deriv(x + h, y + h * deriv(x, y))) / 2;
+        cout << x + h << " " << y << endl;
     }
 }
 
