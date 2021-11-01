@@ -15,7 +15,7 @@ void Euler(double(deriv)(double, double), double h, double begin, double end, do
     cout << begin << " " << y << endl;
     double error = 0;
     for (auto x = begin + h; x < end + h; x+=h){
-        y += h * y_der(x, y);
+        y += h * deriv(x, y);
         cout << x << " " << y << endl;
         error = max(error, fabs(func(x) - y));
     }
@@ -37,11 +37,9 @@ void RungeKutt(double(deriv)(double, double), double h, double begin, double end
 
 void EulerKoshi(double(deriv)(double, double), double h, double begin, double end, double y){
     cout << begin << " " << y << endl;
-    double error = 0;
-    for (auto x = begin + h; x < end + h; x+=h){
-        y = y + h/2.0 * (deriv(x - h, y) + deriv(x, y + h*deriv(x, y)) );
-        error = max(error, fabs(func(x) - y));
-        cout << x << " " << y << endl;
+    for (auto x = begin; x < end; x+=h){
+        y = y + h * (deriv(x, y) + deriv(x + h, y + h * deriv(x, y))) / 2;
+        cout << x + h << " " << y << endl;
     }
     cout << "Max error is " << error << endl;
 }
