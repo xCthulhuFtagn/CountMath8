@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <iostream>
 #include <cmath>
 #include <vector>
@@ -48,3 +49,7 @@ int main(){
     cout << "x ** EulerKoshi ** function" << endl;
     EulerKoshi(y_der, h, begin, end, y);
 }
+=======
+q.push_back(deriv(x, *y_.rbegin()) * h);
+        
+>>>>>>> 906f0623794eb2e73b686775dbad3f4624a3c553
